@@ -1,43 +1,38 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
 
-import { AppState } from './../../redux/app.state';
-import { DECREMENT, PLUS, PlusAction } from '../../redux/counter/counter.actions';
+import { AppState} from '../../redux/app.state';
+import { DecrementAction, PlustAction } from '../../redux/counter/counter.actions';
 
 @Component({
   selector: 'app-counter',
   templateUrl: './counter.component.html',
-  styleUrls: ['./counter.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit {
 
-  counter: number;
+  counter:number;
 
   constructor(
     private store: Store<AppState>
-  ) {
+  ){
     this.store.select('counter')
-    .subscribe((counterState) => {
+    .subscribe((counterState) =>{
       this.counter = counterState;
-    });
+      console.log('initState', counterState);
+    })
   }
 
   ngOnInit() {
   }
 
-  decrement() {
-    const action: Action = {
-      type: DECREMENT
-    };
+  decrement(){
+    const action = new DecrementAction();
     this.store.dispatch(action);
   }
 
-  plus() {
-    const action: PlusAction = {
-      type: PLUS,
-      payload: 12
-    };
+  plus(){
+    const action = new PlustAction(6);
     this.store.dispatch(action);
   }
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
 
-import { AppState } from './../redux/app.state';
-import { INCREMENT } from '../redux/counter/counter.actions';
+import { AppState} from './../redux/app.state';
+import { IncrementAction } from '../redux/counter/counter.actions';
 
 @Component({
   selector: 'app-root',
@@ -15,20 +15,16 @@ export class AppComponent {
 
   constructor(
     private store: Store<AppState>
-  ) {
+  ){
     this.store.select('counter')
-    .subscribe((counterState) => {
+    .subscribe((counterState) =>{
       this.counter = counterState;
-      console.log('counterState', counterState);
-    });
+      console.log('initState', counterState);
+    })
   }
 
-  increment() {
-    console.log('increment');
-    const action: Action = {
-      type: INCREMENT
-    };
+  increment(){
+    const action = new IncrementAction();
     this.store.dispatch(action);
   }
-
 }
